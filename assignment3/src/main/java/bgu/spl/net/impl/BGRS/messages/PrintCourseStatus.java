@@ -5,7 +5,7 @@ import bgu.spl.net.impl.BGRS.messages.BasicMessage.MessageUsernameCourseumber;
 public class PrintCourseStatus extends MessageUsernameCourseumber {
     public PrintCourseStatus(String username, int courseNumber) {
         super(username, courseNumber);
-        opcode=7;
+        opcode = 7;
     }
 
     @Override

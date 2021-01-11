@@ -188,7 +188,11 @@ import java.util.function.DoubleToIntFunction;
 
     //Return user's course list
     public String CheckMyCurrentCourses(String username) {
-        return userConcurrentHashMap.get(username).getKdamCoursesList().toString();
+        User user = userConcurrentHashMap.get(username);
+        if(user != null && !user.getIsAdmin()) {
+            return user.getKdamCoursesList().toString();
+        }
+        return null;
     }
 
     //Return Kdam course list of specific course number if exist, otherwise return null
@@ -208,11 +212,11 @@ import java.util.function.DoubleToIntFunction;
                 output = "Course:" + "(" + course.getCourseNum() + ")" + course.getCourseName() + "\n";
                 int numOfSeatsAvailable = course.getNumOfMaxStudents() - course.getNumRegistered();
                 output += "Seats Available:" + numOfSeatsAvailable + "/" + course.getNumOfMaxStudents() + "\n";
-                Vector<String> usersName = new Vector<>();
+                Vector<String> usersNameOfStudents = new Vector<>();
                 for (User u : course.getListOfStudents())
-                    usersName.add(u.getUsername());
-                Collections.sort(usersName);
-                output += "Students Registered: " + userName;
+                    usersNameOfStudents.add(u.getUsername());
+                Collections.sort(usersNameOfStudents);
+                output += "Students Registered: " + usersNameOfStudents;
             }
         }
         return output;
@@ -223,7 +227,6 @@ import java.util.function.DoubleToIntFunction;
             Vector<Integer> courseList = userConcurrentHashMap.get(username).getKdamCoursesList();
             boolean isRegistered = courseList.contains(courseNumber);
             if (isRegistered) {
-                //courseList.remove(courseNumber);
                 return "REGISTERED";
             } else {
                 return "NOT REGISTERED";
@@ -233,12 +236,13 @@ import java.util.function.DoubleToIntFunction;
         }
     }
 
-    public String StudentsStats(String userName) { //message 8
+    public String StudentsStats(String userName, String studentUsername) { //message 8
         String output = null;
-        User user = userConcurrentHashMap.get(userName);
-        if (user != null && user.getIsAdmin()) { //  only for admins
-            output= "Student:" + user.getUsername() +"\n";
-            output+= "Courses:" + user.getKdamCoursesList().toString() ;
+        User studentUser = userConcurrentHashMap.get(studentUsername);
+        User adminUser = userConcurrentHashMap.get(userName);
+        if (studentUser != null && adminUser != null && adminUser.getIsAdmin()) { //  only for admins
+            output= "Student:" + studentUser.getUsername() +"\n";
+            output+= "Courses:" + studentUser.getKdamCoursesList().toString() ;
         }
         return output;
     }

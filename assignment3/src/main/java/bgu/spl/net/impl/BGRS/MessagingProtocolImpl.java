@@ -71,9 +71,10 @@ public class MessagingProtocolImpl<T> implements MessagingProtocol<String> {
 
                 return ERR.execute();
             case 8:
-                if(isThereClientLoggedIn())
-                    return new PrintStudentStatus(username).execute();
-
+                if(isThereClientLoggedIn()) {
+                    String[] studentUsername = getUserNameOrPassword(msg);
+                    return new PrintStudentStatus(username, studentUsername[1]).execute();
+                }
                 return ERR.execute();
             case 9:
                 if(isThereClientLoggedIn())
@@ -103,6 +104,7 @@ public class MessagingProtocolImpl<T> implements MessagingProtocol<String> {
     private boolean isThereClientLoggedIn() {
         return username != null;
     }
+
     //Return an array of username and password that client sent to the server
     private String[] getUserNameOrPassword(String msg){
         return msg.split(" ");
