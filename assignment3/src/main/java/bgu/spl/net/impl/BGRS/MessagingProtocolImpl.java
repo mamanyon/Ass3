@@ -11,14 +11,14 @@ public class MessagingProtocolImpl<T> implements MessagingProtocol<String> {
 
     @Override
     public String process(String msg) {
-        System.out.println("MESSAGE RECIEVED ---->" + msg);
+
         String op = msg.substring(0,2);
         int opCode;
         if(op.charAt(1)==' ')
             opCode = Integer.parseInt(msg.substring(0,1));
         else
             opCode=Integer.parseInt(msg.substring(0,2));
-        System.out.println("opcode:" + opCode);
+
         Error ERR = new Error(opCode);
         String[] usernameAndPassword;
 

@@ -28,7 +28,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
             return popString();
             //between 5 to 10 (not include 8)
         else if ((opCode >= 5 & opCode <= 10 & opCode != 8 & len == 4)) {
-            System.out.println(Arrays.toString(bytes));
+
             return popString();
         } else if (opCode == 8 & numOfZeros == 2)
             return popString();
@@ -84,7 +84,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
 
     @Override
     public byte[] encode(String message) {
-        System.out.println( message + " _______________"+ message );
+
         String[] splitMessage = new String[3];
         splitMessage[0] = message.substring(0, 2); //ack or error
         short ackError = Short.parseShort(splitMessage[0]);
@@ -102,7 +102,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
         }
         splitMessage[1] = a;
 
-        System.out.println(splitMessage[0] + "----" + splitMessage[1] + "-------" + splitMessage[2]);
+
 
         //String[] splitMessage = message.split(" ");// split between spaces
 
@@ -113,9 +113,9 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
         byte[] optional = null;
         if (ackError == 12) {//ack
             if (MessageOpCode == 6 | MessageOpCode == 7 | MessageOpCode == 8 | MessageOpCode == 9 | MessageOpCode == 11) {
-                System.out.println("dabun ya sharmutaaaaa - ze baror ?? :" + splitMessage[2]);
+
                 optional = (splitMessage[2] + "\0").getBytes(StandardCharsets.UTF_8);
-                System.out.println("optional1 -->  " + Arrays.toString(optional));
+
             }
         }
 
@@ -129,7 +129,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
             byte[] result = new byte[messageByte.length + optional.length];
             System.arraycopy(messageByte, 0, result, 0, messageByte.length);
             System.arraycopy(optional, 0, result, messageByte.length, optional.length);
-            System.out.println("result -->  " + Arrays.toString(result));
+
 
             return result;
         }

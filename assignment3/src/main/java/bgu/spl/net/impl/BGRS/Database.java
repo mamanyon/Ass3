@@ -27,7 +27,7 @@ import java.util.function.DoubleToIntFunction;
         courseHashMap = new HashMap<>();
         userConcurrentHashMap = new ConcurrentHashMap<>();
 
-        initialize("/home/spl211/IdeaProjects/Ass3/assignment3/src/main/java/BGRSMain/Courses.txt");
+        initialize("./Courses.txt");
 
     }
 
@@ -57,18 +57,18 @@ import java.util.function.DoubleToIntFunction;
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
                 String[] splitLine = line.split("\\|");
-                System.out.println(Arrays.toString(splitLine));
+
                 //Initiate course number, name and the number of max student of the course
                 int courseNumber = Integer.parseInt(splitLine[0]);
                 String courseName = splitLine[1];
                 int numOfMaxStudent = Integer.parseInt(splitLine[3]);
 
                 //Initiate Kdam courses vector
-                System.out.println(splitLine[2]);
+
 
                 String[] stringKdamCourses = (splitLine[2].substring(1, splitLine[2].length()-1)).split(",");
 
-                System.out.println("stringKdamCourses ---> " + Arrays.toString(stringKdamCourses));
+
 
                 Vector<Integer> kdamCourses = new Vector<>();
                 if(!stringKdamCourses[0].equals("")) {
@@ -76,12 +76,12 @@ import java.util.function.DoubleToIntFunction;
                     for (String courseNum : stringKdamCourses)
                         kdamCourses.add(Integer.parseInt(courseNum));
 
-                    System.out.println(kdamCourses.toString());
+
                 }
 
                 //Embed the course to the hash map with the key represented by the course number
                 courseHashMap.put(courseNumber, new Course(courseNumber, courseName, kdamCourses, numOfMaxStudent));
-                System.out.println("HERE");
+
             }
         } catch (FileNotFoundException e) {
             System.out.println("You got a problem with your file path");
