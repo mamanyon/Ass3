@@ -10,6 +10,10 @@ public class CheckMyCurrentCourses extends MessageUsername {
     }
 
     public String execute() {
-        return new Acknowledgement(opcode, DB.CheckMyCurrentCourses(userName)).execute();
+        String output = DB.CheckMyCurrentCourses(userName);
+        if(output != null)
+            return new Acknowledgement(opcode, output).execute();
+        else
+            return new Error(opcode).execute();
     }
 }
