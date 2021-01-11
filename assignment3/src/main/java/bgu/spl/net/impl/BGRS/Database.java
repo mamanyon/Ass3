@@ -196,9 +196,10 @@ import java.util.function.DoubleToIntFunction;
     }
 
     //Return Kdam course list of specific course number if exist, otherwise return null
-    public String kdamCheck(int courseNumber) {
+    public String kdamCheck(String userName, int courseNumber) {
         Course course = courseHashMap.get(courseNumber);
-        if(course != null)
+        User user = userConcurrentHashMap.get(userName);
+        if(course != null & !user.getIsAdmin())
             return course.getKdamCoursesList().toString();
         return null;
     }
@@ -240,7 +241,7 @@ import java.util.function.DoubleToIntFunction;
         String output = null;
         User studentUser = userConcurrentHashMap.get(studentUsername);
         User adminUser = userConcurrentHashMap.get(userName);
-        if (studentUser != null && adminUser != null && adminUser.getIsAdmin()) { //  only for admins
+        if ((studentUser != null && !studentUser.getIsAdmin()) & (adminUser != null && adminUser.getIsAdmin())) { //  only for admins
             output= "Student:" + studentUser.getUsername() +"\n";
             output+= "Courses:" + studentUser.getKdamCoursesList().toString() ;
         }
