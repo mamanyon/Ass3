@@ -174,7 +174,7 @@ import java.util.function.DoubleToIntFunction;
     //Return true if removed user registration from specific course
     public boolean unregisterToCourse(String username, int courseNumber) {
         User user = userConcurrentHashMap.get(username);
-        if (courseHashMap.get(courseNumber) != null | !user.getIsAdmin()) {
+        if (courseHashMap.get(courseNumber) != null & !user.getIsAdmin()) {
 
             synchronized (this) {
                 Integer cast = courseNumber;
@@ -223,7 +223,7 @@ import java.util.function.DoubleToIntFunction;
     }
 
     public String isRegistered(String username, int courseNumber) { //message 9
-        if (courseHashMap.get(courseNumber) != null | !userConcurrentHashMap.get(username).getIsAdmin()) {
+        if (courseHashMap.get(courseNumber) != null & !userConcurrentHashMap.get(username).getIsAdmin()) {
             Vector<Integer> courseList = userConcurrentHashMap.get(username).getKdamCoursesList();
             boolean isRegistered = courseList.contains(courseNumber);
             if (isRegistered) {
