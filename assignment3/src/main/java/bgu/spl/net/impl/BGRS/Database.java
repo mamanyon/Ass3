@@ -27,7 +27,7 @@ import java.util.function.DoubleToIntFunction;
         courseHashMap = new HashMap<>();
         userConcurrentHashMap = new ConcurrentHashMap<>();
 
-        initialize("/home/spl211/IdeaProjects/assignment3/src/main/java/BGRSMain/Courses.txt");
+        initialize("/home/spl211/IdeaProjects/Ass3/assignment3/src/main/java/BGRSMain/Courses.txt");
 
     }
 
