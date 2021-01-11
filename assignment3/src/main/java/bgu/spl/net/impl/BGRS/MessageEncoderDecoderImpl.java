@@ -40,7 +40,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<Strin
     private String popString() {
         String result;
 
-        if (opCode >= 5 & opCode <= 10) {
+        if (opCode >= 5 & opCode <= 10 & opCode != 8) {
             byte[] bytesNum = new byte[2];
             bytesNum[0] = bytes[2];
             bytesNum[1] = bytes[3];
