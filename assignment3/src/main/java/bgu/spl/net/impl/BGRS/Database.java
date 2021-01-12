@@ -91,28 +91,27 @@ import java.util.function.DoubleToIntFunction;
     }
 
 
-    public boolean addUser(String user, String pass, boolean isAdmin) {
+    public synchronized boolean addUser(String user, String pass, boolean isAdmin) {
         if (userConcurrentHashMap.containsKey(user)) {
             //username already exists
             return false;
         } else {
-            synchronized (this) {
 
                 if (isAdmin) {
                     User admin = new User(user, pass, true);
-                    userConcurrentHashMap.put(user, admin);
+                    userConcurrentHashMap.putIfAbsent(user, admin);
                     return true;
                 } else //not admin
                 {
                     User user1 = new User(user, pass, false);
-                    userConcurrentHashMap.put(user, user1);
+                    userConcurrentHashMap.putIfAbsent(user, user1);
                     return true;
                 }
             }
-        }
     }
 
-    public boolean Login(String user, String pass) {
+    public synchronized boolean Login(String user, String pass) {
+
         User login = userConcurrentHashMap.get(user);
         if (login == null || login.isLoggedIn() | !(login.getPassword().equals(pass))) {
             //mo such username || already logged in | password is not correct
